@@ -316,6 +316,10 @@ class Client
      */
     protected function isPipe($contents): bool
     {
+    	if (is_resource($contents) && fstat($contents)['size'] === 0) {
+            return true;
+        }
+
         return is_resource($contents) ? (fstat($contents)['mode'] & 010000) != 0 : false;
     }
 
